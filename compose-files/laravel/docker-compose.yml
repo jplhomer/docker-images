@@ -1,0 +1,25 @@
+version: '3.1'
+services:
+  app:
+    image: jplhomer/php-laravel:latest
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/var/www
+  node:
+    image: node:latest
+    working_dir: /var/www
+    command: yarn run watch
+    volumes:
+      - .:/var/www:cached
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_USER: "${DB_USERNAME}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+    volumes:
+      - db_data:/var/lib/mysql
+volumes:
+  db_data:
