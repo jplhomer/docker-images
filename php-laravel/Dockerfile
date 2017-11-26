@@ -29,6 +29,11 @@ RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/compos
 RUN apt-get update && apt-get install -y mysql-client \
     && docker-php-ext-install pdo_mysql
 
+# Install PHPUnit
+RUN curl -s -f -L -o /tmp/phpunit.phar https://phar.phpunit.de/phpunit.phar \
+    && chmod +x /tmp/phpunit.phar \
+    && mv /tmp/phpunit.phar /usr/local/bin/phpunit
+
 WORKDIR /var/www
 
 EXPOSE 8000
