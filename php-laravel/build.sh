@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-php_versions=("7" "7.1" "7.2-rc")
+php_versions=("7" "7.1" "7.2")
 
 # Build the latest version
 docker build . -t jplhomer/php-laravel:latest
