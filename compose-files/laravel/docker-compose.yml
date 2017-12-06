@@ -6,10 +6,14 @@ services:
       - 8000:8000
     volumes:
       - .:/var/www
+    depends_on:
+      - mysql
   node:
     image: node:latest
     working_dir: /var/www
     command: yarn run watch
+    ports:
+      - 8080:8080
     volumes:
       - .:/var/www:cached
   mysql:
