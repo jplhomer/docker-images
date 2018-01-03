@@ -26,8 +26,9 @@ RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/compos
     && rm -rf /tmp/* /tmp/.htaccess
 
 # Install PHP necessities for Laravel to operate
+# pctnl: required by Laravel Horizon
 RUN apt-get update && apt-get install -y mysql-client \
-    && docker-php-ext-install pdo_mysql
+    && docker-php-ext-install pdo_mysql pcntl
 
 # Install PHPUnit
 RUN curl -s -f -L -o /tmp/phpunit.phar https://phar.phpunit.de/phpunit.phar \
