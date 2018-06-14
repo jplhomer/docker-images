@@ -3,14 +3,14 @@ ARG PHP_VERSION=7.2
 FROM php:${PHP_VERSION}-fpm
 
 # Install Composer stuff
-RUN apt-get update && apt-get install -y curl zip unzip git
+RUN apt-get update && apt-get install -y curl zip unzip git libpng-dev
 
 RUN echo "memory_limit=-1" > "$PHP_INI_DIR/conf.d/memory-limit.ini" \
     && echo "date.timezone=${PHP_TIMEZONE:-UTC}" > "$PHP_INI_DIR/conf.d/date_timezone.ini"
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /tmp
-ENV COMPOSER_VERSION 1.5.2
+ENV COMPOSER_VERSION 1.6.5
 
 RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/composer/getcomposer.org/da290238de6d63faace0343efbdd5aa9354332c5/web/installer \
     && php -r " \
@@ -27,8 +27,9 @@ RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/compos
 
 # Install PHP necessities for Laravel to operate
 # pctnl: required by Laravel Horizon
+# gd: required by Laravel Cashier
 RUN apt-get update && apt-get install -y mysql-client \
-    && docker-php-ext-install pdo_mysql pcntl
+    && docker-php-ext-install pdo_mysql pcntl gd
 
 # Install PHPUnit
 RUN curl -s -f -L -o /tmp/phpunit.phar https://phar.phpunit.de/phpunit.phar \
